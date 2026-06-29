@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Space+Grotesk:wght@300..700&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=clash-display@300,400,500,600,700&display=swap');
+
+:root {
+  /* Dark Void Background Colors */
+  --bg-dark-1: #050505;
+  --bg-dark-2: #090909;
+  --bg-dark-3: #111111;
+  --bg-dark-4: #151515;
+
+  /* Accent Glow Colors */
+  --glow-primary: #4F7DFF;
+  --glow-cyan: #00D9FF;
+  --glow-violet: #7B61FF;
+  
+  --accent-teal: #00FFC6;
+  --accent-green: #4ADE80;
+  --accent-amber: #F59E0B;
+
+  /* Typography Colors */
+  --text-pure: #FFFFFF;
+  --text-bright: #DADADA;
+  --text-muted: #8A8A8A;
+  --text-dark: #3a3a3a;
+
+  /* Premium Glass Cards */
+  --glass-fill: rgba(255, 255, 255, 0.03);
+  --glass-fill-hover: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.15);
+  --glass-blur: blur(20px);
+
+  /* Borders & Radius */
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 8px;
+  --border-width: 1px;
+
+  /* Fonts */
+  --font-display: 'Clash Display', 'Space Grotesk', sans-serif;
+  --font-heading: 'Satoshi', 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', 'Instrument Sans', sans-serif;
+
+  /* Shadows */
+  --shadow-subtle: 0 4px 30px rgba(0, 0, 0, 0.5);
+  --shadow-glow-blue: 0 0 40px rgba(79, 125, 255, 0.15);
+  --shadow-glow-violet: 0 0 40px rgba(123, 97, 255, 0.15);
+  --shadow-glow-teal: 0 0 40px rgba(0, 255, 198, 0.1);
+
+  /* Transition timings */
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.2s ease;
+}
+
+/* Base styles / CSS resets for custom animations */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  background-color: var(--bg-dark-1);
+  color: var(--text-bright);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.lenis {
+  height: auto;
+}
+
+.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Glassmorphism utility classes */
+.glass-panel {
+  background: var(--glass-fill);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--border-width) solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-subtle);
+  transition: var(--transition-smooth);
+}
+
+.glass-panel:hover {
+  background: var(--glass-fill-hover);
+  border-color: var(--glass-border-hover);
+}
+
+.glow-overlay {
+  position: absolute;
+  border-radius: inherit;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: radial-gradient(800px circle at var(--x, 0px) var(--y, 0px), rgba(255, 255, 255, 0.06), transparent 40%);
+}
+
+.glass-panel:hover .glow-overlay {
+  opacity: 1;
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--glow-primary);
+  color: var(--text-pure);
+}
