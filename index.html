@@ -29,6 +29,10 @@
       </div>
     </div>
 
+    <div class="scroll-progress" id="scrollBar"></div>
+    <div class="grain"></div>
+    <div class="ambient"></div>
+
     <!-- Custom Cursor -->
     <div id="custom-cursor"></div>
     <div id="custom-cursor-glow"></div>
@@ -73,21 +77,26 @@
             <h1 class="hero-heading">
               Everything You<br>
               Need to Land Your<br>
-              <span class="gradient-text">Dream Tech Job.</span>
+              <span class="gradient-text" id="glitchWord">Dream Tech Job.</span>
             </h1>
             <p class="hero-subtitle">
               8 free AI career tools, 1000+ interview resources, company prep guides, job tracker, and a community of 1 lakh+ engineers — all in one place.
             </p>
-            <div class="hero-ctas">
+            <div class="hero-ctas" style="margin-bottom: 30px;">
               <a href="https://www.lets-code.co.in/dashboard/job-ready-score/" class="btn-primary-glow" target="_blank">Check Job Ready Score — Free</a>
               <a href="https://www.lets-code.co.in/dashboard/mocktest/" class="btn-glass" target="_blank">Start Mock Interview</a>
             </div>
-
+            <div class="hero-ticker" style="margin-top: 0px; display: flex; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--text-muted); height: 20px; overflow: hidden; position: relative;">
+              <span class="ticker-text" id="heroTicker" style="display: inline-block; transition: opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1), filter .55s ease;">Aman just checked his Job Ready Score — 94/100</span>
+            </div>
           </div>
           
-          <div class="hero-right">
+          <div class="hero-right" style="position: relative; height: 500px;">
+            <!-- Ambient Glowing Orb behind mockups -->
+            <canvas id="orb-canvas" style="position: absolute; width: 450px; height: 450px; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; z-index: 1;"></canvas>
+            
             <!-- Glass Dashboard Mockup -->
-            <div class="glass-panel hero-dashboard">
+            <div class="glass-panel hero-dashboard" style="z-index: 2; position: relative; margin-left: 40px; margin-top: -20px;">
               <div class="glow-overlay"></div>
               <div class="dashboard-header">
                 <div class="dashboard-user">
@@ -142,14 +151,18 @@
               </div>
             </div>
 
-            <!-- Floating Alerts for depth -->
-            <div class="floating-alert one">
-              <div class="alert-icon">✓</div>
-              <div class="alert-text">TCS mock interview cleared: 92%</div>
-            </div>
-            <div class="floating-alert two">
-              <div class="alert-icon">✨</div>
-              <div class="alert-text">LinkedIn: 3.5x more profile views</div>
+            <!-- Overlapping Typing Terminal -->
+            <div class="glass-panel hero-terminal" style="position: absolute; bottom: 0px; left: -20px; z-index: 3; width: 330px; height: 230px; padding: 12px; font-size: 10.5px; box-shadow: 0 15px 40px rgba(0,0,0,0.5);">
+              <div class="glow-overlay"></div>
+              <div class="terminal-header" style="padding-bottom: 6px; margin-bottom: 8px;">
+                <div class="terminal-dots">
+                  <span class="terminal-dot r" style="width:6px; height:6px;"></span>
+                  <span class="terminal-dot y" style="width:6px; height:6px;"></span>
+                  <span class="terminal-dot g" style="width:6px; height:6px;"></span>
+                </div>
+                <div class="terminal-title" style="font-size:9.5px;">lets-code-copilot ~ zsh</div>
+              </div>
+              <div class="terminal-body" id="terminal-body" style="height: 180px; overflow-y: hidden; line-height: 1.45;"></div>
             </div>
           </div>
         </section>
@@ -386,36 +399,78 @@
              SECTION 4: ATS RESUME TEMPLATES
              ========================================== -->
         <section id="templates">
-          <div class="section-header">
-            <span class="section-tag">Build an ATS-Ready Resume in Minutes</span>
-            <h2 class="section-title">6 Free <span>ATS templates</span> for developers.</h2>
-            <p class="section-desc">Classic, Campus, Sigma, Harvard, Clean, and Executive designs. Fill in details with real-time editing, preview, and download as PDF with active clickable links.</p>
-          </div>
-          
-          <div class="communities-grid">
-            <a href="https://www.lets-code.co.in/dashboard/optimizeresume/" target="_blank" class="glass-panel community-card" style="height: 180px; text-decoration: none;">
+          <div class="two-col-templates" style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center;">
+            <div>
+              <div class="section-header" style="margin-bottom: 30px;">
+                <span class="section-tag">6 Free Resume Templates</span>
+                <h2 class="section-title" style="margin-bottom: 20px;">Build an ATS-ready <span>resume in minutes.</span></h2>
+                <p class="section-desc" style="margin-bottom: 30px;">Classic, Campus, Sigma, Harvard and more. Fill in your details with live preview and download a PDF with clickable links instantly.</p>
+              </div>
+              <div class="chip-row" style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 30px;">
+                <a class="chip" href="https://www.lets-code.co.in/resume-templates/" target="_blank">Classic</a>
+                <a class="chip" href="https://www.lets-code.co.in/resume-templates/" target="_blank">Executive</a>
+                <a class="chip" href="https://www.lets-code.co.in/resume-templates/" target="_blank">Clean</a>
+                <a class="chip" href="https://www.lets-code.co.in/resume-templates/" target="_blank">Campus</a>
+                <a class="chip" href="https://www.lets-code.co.in/resume-templates/" target="_blank">Harvard</a>
+                <a class="chip" href="https://www.lets-code.co.in/resume-templates/" target="_blank">Sigma</a>
+              </div>
+              <div class="hero-ctas" style="margin-bottom: 0; display: flex; gap: 20px;">
+                <a href="https://www.lets-code.co.in/resume-templates/" class="btn-primary-glow" target="_blank">Browse Templates</a>
+                <a href="https://www.lets-code.co.in/dashboard/resumes/" class="btn-glass" target="_blank">My Saved Resumes</a>
+              </div>
+            </div>
+            
+            <div class="glass-panel resume-showcase" style="padding: 34px; height: 380px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: visible;">
               <div class="glow-overlay"></div>
-              <h3 class="community-name">Classic Template</h3>
-              <p class="community-members">Traditional formatting for experienced roles</p>
-            </a>
-            <a href="https://www.lets-code.co.in/dashboard/optimizeresume/" target="_blank" class="glass-panel community-card" style="height: 180px; text-decoration: none;">
-              <div class="glow-overlay"></div>
-              <h3 class="community-name">Campus Template</h3>
-              <p class="community-members">Structured layout highlighting projects & grades</p>
-            </a>
-            <a href="https://www.lets-code.co.in/dashboard/optimizeresume/" target="_blank" class="glass-panel community-card" style="height: 180px; text-decoration: none;">
-              <div class="glow-overlay"></div>
-              <h3 class="community-name">Sigma Template</h3>
-              <p class="community-members">Modern clean details for startup engineering applications</p>
-            </a>
-            <a href="https://www.lets-code.co.in/dashboard/optimizeresume/" target="_blank" class="glass-panel community-card" style="height: 180px; text-decoration: none;">
-              <div class="glow-overlay"></div>
-              <h3 class="community-name">Harvard Template</h3>
-              <p class="community-members">Standard academic layout with clean typographic paths</p>
-            </a>
-          </div>
-          <div style="text-align: center; margin-top: 40px;">
-            <a href="https://www.lets-code.co.in/dashboard/optimizeresume/" class="btn-primary-glow" target="_blank">Browse All Resume Templates</a>
+              <div style="font-family: var(--font-heading); font-size: 12px; color: var(--text-muted); margin-bottom: 18px; z-index: 10; text-transform: uppercase; letter-spacing: 1px;">
+                ATS-Optimised · Live 3D Stack · PDF Download · Free
+              </div>
+              
+              <div class="resume-stack-container">
+                <div class="resume-card harvard" onclick="switchResume(this)">
+                  <div class="resume-header">
+                    <div class="resume-name">HARVARD STYLE</div>
+                  </div>
+                  <div class="resume-body-lines">
+                    <div class="line long"></div>
+                    <div class="line mid"></div>
+                    <div class="line short"></div>
+                    <div class="line long"></div>
+                    <div class="line mid"></div>
+                  </div>
+                </div>
+                
+                <div class="resume-card sigma" onclick="switchResume(this)">
+                  <div class="resume-header">
+                    <div class="resume-name">SIGMA DEV</div>
+                  </div>
+                  <div class="resume-body-lines">
+                    <div class="line mid"></div>
+                    <div class="line long"></div>
+                    <div class="line short"></div>
+                    <div class="line mid"></div>
+                    <div class="line long"></div>
+                  </div>
+                </div>
+                
+                <div class="resume-card classic" onclick="switchResume(this)">
+                  <div class="resume-header">
+                    <div class="resume-name">CLASSIC CAMPUS</div>
+                  </div>
+                  <div class="resume-body-lines">
+                    <div class="line short"></div>
+                    <div class="line long"></div>
+                    <div class="line mid"></div>
+                    <div class="line long"></div>
+                    <div class="line short"></div>
+                  </div>
+                </div>
+              </div>
+              
+              <div style="font-family: var(--font-body); color: var(--text-muted); font-size: 12.5px; text-align: center; margin-top: 20px; z-index: 10; pointer-events: none;">
+                Hover to spread • Click to cycle templates
+              </div>
+            </div>
           </div>
         </section>
 

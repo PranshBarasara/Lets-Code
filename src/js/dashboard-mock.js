@@ -1,3 +1,5 @@
+import { gsap } from 'gsap';
+
 export function initDashboardSimulator() {
   // 1. Resume Score Progress Ring
   const circle = document.querySelector('.resume-score-ring svg circle.progress-ring-circle');
@@ -20,15 +22,9 @@ export function initDashboardSimulator() {
     setTimeout(() => {
       setProgress(88);
     }, 1200);
-
-    // Random fluctuation to feel alive
-    setInterval(() => {
-      const fluctuation = 85 + Math.floor(Math.random() * 8);
-      setProgress(fluctuation);
-    }, 5000);
   }
 
-  // 2. Animated GitHub commit line charts (SVG path shifting)
+  // 2. Animated GitHub commit line charts (SVG path shifting) - if path exists
   const chartPath = document.getElementById('chart-line');
   if (chartPath) {
     let points = [30, 70, 45, 95, 60, 110, 80, 130];
@@ -42,7 +38,6 @@ export function initDashboardSimulator() {
       }, '');
     }
 
-    // Animate points periodically
     setInterval(() => {
       points = points.map(p => {
         const diff = (Math.random() - 0.5) * 20;
@@ -90,7 +85,6 @@ export function initDashboardSimulator() {
 
       showcaseContent.appendChild(toast);
 
-      // Animation lifecycle
       setTimeout(() => {
         toast.style.opacity = '1';
         toast.style.transform = 'translateY(0) scale(1)';
@@ -103,7 +97,179 @@ export function initDashboardSimulator() {
       }, 4000);
     }
 
-    // Trigger toast alerts periodically
     setInterval(createLiveToast, 6000);
   }
+
+  // 4. Copilot Terminal Typing Simulation
+  initTerminalTyping();
+
+  // 5. Hero Activity Ticker Rotation
+  initHeroTicker();
+
+  // 6. Title Word Glitch Scramble
+  initGlitchHover();
+
+  // 7. Confetti Burst Triggers
+  initConfettiBurst();
+
+  // 8. 3D Tilt for Terminal and Showcase Card
+  init3DTilt();
 }
+
+function initTerminalTyping() {
+  const terminalLines = [
+    '<span class="t-comment">// Initialize Let\'s Code AI placement agent...</span>',
+    '<span class="t-keyword">const</span> <span class="t-var">agent</span> = <span class="t-keyword">new</span> <span class="t-func">PlacementAssistant</span>({ user: <span class="t-str">"candidate"</span> });',
+    '<span class="t-keyword">await</span> <span class="t-var">agent</span>.<span class="t-func">analyzeProfile</span>({ resume: <span class="t-str">"ATS_Optimized.pdf"</span> });',
+    '<span class="t-output">&gt;&gt; Resume Match: 98% (Excellent Fit)</span>',
+    '<span class="t-output">&gt;&gt; Recommended Roles: SDE, Frontend, AI Engineer</span>',
+    '<span class="t-comment">// Fetching latest Google, Amazon & TCS coding rounds...</span>',
+    '<span class="t-keyword">const</span> <span class="t-var">pyqs</span> = <span class="t-keyword">await</span> <span class="t-var">agent</span>.<span class="t-func">loadPYQs</span>([<span class="t-str">"Amazon"</span>, <span class="t-str">"Google"</span>, <span class="t-str">"TCS"</span>]);',
+    '<span class="t-keyword">const</span> <span class="t-var">roadmap</span> = <span class="t-var">agent</span>.<span class="t-func">generate90DayRoadmap</span>(<span class="t-var">pyqs</span>);',
+    '<span class="t-output">&gt;&gt; Generation complete. Opening dashboard...</span>',
+    '<span class="t-var">agent</span>.<span class="t-func">startMockInterview</span>({ topic: <span class="t-str">"Data Structures"</span> });',
+    '<span class="t-output">&gt;&gt; AI Evaluator: "Explain Dijkstra\'s complexity..."</span>'
+  ];
+
+  let lineIndex = 0;
+  const terminalBody = document.getElementById('terminal-body');
+
+  function typeTerminal() {
+    if (!terminalBody) return;
+    if (lineIndex < terminalLines.length) {
+      const line = document.createElement('div');
+      line.innerHTML = terminalLines[lineIndex];
+      terminalBody.appendChild(line);
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+      lineIndex++;
+      setTimeout(typeTerminal, 1800);
+    } else {
+      setTimeout(() => {
+        terminalBody.innerHTML = '';
+        lineIndex = 0;
+        typeTerminal();
+      }, 4000);
+    }
+  }
+  typeTerminal();
+}
+
+function initHeroTicker() {
+  const el = document.getElementById('heroTicker');
+  if (!el) return;
+  const items = [
+    'Aman just checked his Job Ready Score — 94/100',
+    'Riya started a Mock Interview on System Design',
+    'Karthik joined the AI/ML Engineers community',
+    'Sneha generated an ATS resume in 40 seconds',
+    'Vivek tracked a new application — Goldman Sachs',
+    'Pooja unlocked her GitHub Optimizer report'
+  ];
+  let i = 0;
+  setInterval(()=>{
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(8px)';
+    el.style.filter = 'blur(3px)';
+    setTimeout(()=>{
+      i = (i+1) % items.length;
+      el.textContent = items[i];
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+      el.style.filter = 'blur(0)';
+    }, 550);
+  }, 3800);
+}
+
+function initGlitchHover() {
+  const el = document.getElementById('glitchWord');
+  if (!el) return;
+  const original = el.textContent;
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*';
+  let animating = false;
+  el.addEventListener('mouseenter', ()=>{
+    if (animating) return;
+    animating = true;
+    let iterations = 0;
+    const interval = setInterval(()=>{
+      el.textContent = original.split('').map((ch,idx)=>{
+        if (ch === ' ') return ' ';
+        if (idx < iterations) return original[idx];
+        return chars[Math.floor(Math.random()*chars.length)];
+      }).join('');
+      iterations += 1;
+      if (iterations > original.length){
+        clearInterval(interval);
+        el.textContent = original;
+        animating = false;
+      }
+    }, 35);
+  });
+}
+
+function initConfettiBurst() {
+  function burst(x, y) {
+    const colors = ['#00D9FF', '#7B61FF', '#F59E0B', '#DADADA'];
+    for (let i = 0; i < 24; i++) {
+      const p = document.createElement('div');
+      const size = 5 + Math.random() * 5;
+      p.style.cssText = `position:fixed;left:${x}px;top:${y}px;width:${size}px;height:${size}px;background:${colors[i%colors.length]};border-radius:${Math.random()>0.5?'50%':'2px'};pointer-events:none;z-index:9999;`;
+      document.body.appendChild(p);
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 60 + Math.random() * 90;
+      const dx = Math.cos(angle) * dist;
+      const dy = Math.sin(angle) * dist - 40;
+      gsap.to(p, {
+        x: dx,
+        y: dy,
+        opacity: 0,
+        rotation: Math.random() * 360,
+        duration: 0.9 + Math.random() * 0.4,
+        ease: 'power2.out',
+        onComplete: () => p.remove()
+      });
+    }
+  }
+  document.querySelectorAll('.btn-primary-glow, .btn-glass').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      burst(e.clientX, e.clientY);
+    });
+  });
+}
+
+function init3DTilt() {
+  const terminal = document.querySelector('.hero-terminal');
+  const showcase = document.querySelector('.hero-right');
+  if (showcase && terminal) {
+    showcase.addEventListener('mousemove', e => {
+      const r = showcase.getBoundingClientRect();
+      const px = (e.clientX - r.left)/r.width;
+      const py = (e.clientY - r.top)/r.height;
+      const rx = (py - 0.5) * -16;
+      const ry = (px - 0.5) * 16;
+      terminal.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(20px)`;
+    });
+    showcase.addEventListener('mouseleave', () => {
+      terminal.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+    });
+  }
+}
+
+// Global 3D Resume Stack Cycling Trigger
+window.switchResume = function(clickedCard) {
+  const container = document.querySelector('.resume-stack-container');
+  if (!container || clickedCard.classList.contains('sigma')) return;
+
+  const harvard = container.querySelector('.harvard');
+  const sigma = container.querySelector('.sigma');
+  const classic = container.querySelector('.classic');
+
+  if (clickedCard === harvard) {
+    harvard.className = 'resume-card sigma';
+    sigma.className = 'resume-card classic';
+    classic.className = 'resume-card harvard';
+  } else if (clickedCard === classic) {
+    classic.className = 'resume-card sigma';
+    sigma.className = 'resume-card harvard';
+    harvard.className = 'resume-card classic';
+  }
+};

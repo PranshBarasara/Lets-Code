@@ -320,3 +320,201 @@
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
 }
+
+/* Grain Overlay */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxmaWx0ZXIgaWQ9J24nPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjg1JyBudW1PY3RhdmVzPScyJyBzdGl0Y2hUaWxlcz0tc3RpdGNoJy8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsdGVyPSd1cmwoI24pJy8+PC9zdmc+");
+  background-size: 180px 180px;
+}
+
+/* Ambient Glow Spots */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 80% -10%, rgba(123, 97, 255, 0.15), transparent 60%),
+    radial-gradient(50% 40% at 10% 10%, rgba(0, 217, 255, 0.1), transparent 60%);
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--glow-cyan), var(--glow-violet), var(--accent-amber));
+  z-index: 10000;
+  width: 0%;
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+}
+
+/* Hero Terminal Typing Copilot */
+.hero-terminal {
+  width: 400px;
+  background: rgba(8, 8, 14, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  padding: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px rgba(0, 217, 255, 0.05);
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(.16,1,.3,1);
+  will-change: transform;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  color: var(--text-bright);
+  text-align: left;
+}
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+.terminal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.terminal-dot.r { background: #ff5f56; }
+.terminal-dot.y { background: #ffbd2e; }
+.terminal-dot.g { background: #27c93f; }
+.terminal-title {
+  color: var(--text-muted);
+  font-size: 10.5px;
+}
+.terminal-body {
+  height: 160px;
+  overflow-y: hidden;
+  line-height: 1.6;
+}
+.t-keyword { color: #ff79c6; }
+.t-func { color: #50fa7b; }
+.t-str { color: #f1fa8c; }
+.t-var { color: #8be9fd; }
+.t-comment { color: #6272a4; }
+.t-output { color: var(--glow-cyan); font-weight: bold; }
+
+/* 3D Stacked Resume Card Grid */
+.resume-showcase {
+  position: relative;
+  perspective: 1200px;
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-subtle);
+  transition: var(--transition-smooth);
+}
+.resume-stack-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  perspective: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.resume-card {
+  position: absolute;
+  width: 170px;
+  height: 220px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #121214;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.resume-card .resume-header {
+  border-bottom: 2px solid #1a202c;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+.resume-card .resume-name {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #121214;
+}
+.resume-card .resume-body-lines .line {
+  height: 4px;
+  background: #cbd5e0;
+  margin-bottom: 6px;
+  border-radius: 2px;
+}
+.resume-card .resume-body-lines .line.long { width: 100%; }
+.resume-card .resume-body-lines .line.mid { width: 75%; }
+.resume-card .resume-body-lines .line.short { width: 45%; }
+
+.resume-card.harvard {
+  transform: translate3d(-40px, 0, -60px) rotateY(15deg);
+  z-index: 1;
+  opacity: 0.65;
+}
+.resume-card.sigma {
+  transform: translate3d(0, 0, 0) scale(1) rotateY(0deg);
+  z-index: 3;
+  opacity: 1;
+}
+.resume-card.sigma .resume-header { border-bottom-color: var(--glow-violet); }
+.resume-card.sigma .resume-name { color: var(--glow-violet); }
+.resume-card.classic {
+  transform: translate3d(40px, 0, -60px) rotateY(-15deg);
+  z-index: 2;
+  opacity: 0.8;
+}
+.resume-card.classic .resume-header { border-bottom-color: var(--glow-cyan); }
+.resume-card.classic .resume-name { color: var(--glow-cyan); }
+
+.resume-stack-container:hover .resume-card.harvard {
+  transform: translate3d(-105px, -10px, -30px) rotateY(22deg);
+  opacity: 0.85;
+}
+.resume-stack-container:hover .resume-card.sigma {
+  transform: translate3d(0, -15px, 45px) scale(1.04) rotateX(4deg);
+}
+.resume-stack-container:hover .resume-card.classic {
+  transform: translate3d(105px, -10px, -30px) rotateY(-22deg);
+  opacity: 0.95;
+}
+
+/* Custom chip style */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-bright);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+.chip:hover {
+  background: var(--glass-fill-hover);
+  border-color: rgba(0, 217, 255, 0.4);
+  color: #fff;
+  transform: translateY(-2px);
+}

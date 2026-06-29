@@ -18,8 +18,15 @@ export function initAnimations() {
   }
   requestAnimationFrame(raf);
 
-  // Sync GSAP scrolltrigger with Lenis scroll
-  lenis.on('scroll', ScrollTrigger.update);
+  // Sync GSAP scrolltrigger with Lenis scroll & update progress bar
+  lenis.on('scroll', (e) => {
+    ScrollTrigger.update();
+    const winScroll = window.scrollY || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    const bar = document.getElementById('scrollBar');
+    if (bar) bar.style.width = scrolled + '%';
+  });
   gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
   });
